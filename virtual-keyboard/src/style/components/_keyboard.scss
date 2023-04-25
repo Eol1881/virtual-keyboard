@@ -1,0 +1,55 @@
+.keyboard {
+  width: 70%;
+  //width: 70%;
+  //height: 200px;
+  margin: 0 auto;
+  padding: 5px;
+  padding-left: 0;
+  padding-bottom: 0;
+  background: #888888;
+  border: 3px solid;
+  border-color: $key-color-orange;
+  border-radius: 5px;
+
+
+  // grid-template-columns: repeat(74, calc($key_size/4));
+  // grid-template-rows: repeat(5, calc($key_size));
+  // grid-column-gap: 0px;
+  // grid-row-gap: calc($key_size/4);
+
+  &__row {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 8px;
+    background-color: #888866;
+
+    display: flex;
+    justify-content: center;
+  }
+
+
+  &__key {
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background-color: red;
+    margin-left: 5px;
+
+
+
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-radius 0.3s, background-color 0.3s;
+  }
+
+
+
+
+
+
+
+
+}
