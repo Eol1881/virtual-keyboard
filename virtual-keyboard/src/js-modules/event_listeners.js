@@ -10,18 +10,25 @@ let temp;
 
 let cursorPosition = 0; // default cursor position
 
+function updateCursorPosition(textarea = TEXTAREA) {
+  textarea.selectionStart = cursorPosition;
+  textarea.selectionEnd = cursorPosition;
+}
+
 KEYBOARD.addEventListener('click', (e) => {
   startTime = performance.now(); // start the delay measurement (performance check)
 
   if (e.target.tagName !== 'SPAN') return;
-  console.log(e.target);
   const keyDatasetValue = e.target.parentElement.parentElement.dataset.value;
+  console.log('~~~~~', keyDatasetValue);
 
   if (keyFunctions[keyDatasetValue]) {
     cursorPosition = keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
+    updateCursorPosition();
   } else {
     TEXTAREA.value = TEXTAREA.value.slice(0, cursorPosition) + e.target.textContent + TEXTAREA.value.slice(cursorPosition);
     cursorPosition += 1;
+    updateCursorPosition();
   }
 
   // create a new input event - default one fires only when physical key is down
@@ -41,6 +48,7 @@ TEXTAREA.addEventListener('input', () => {
 ///////////////////////////////////////////////////////////////////////// Textarea listeners
 let isTextareaFirstClick = true;
 let preventBlur = true;
+TEXTAREA.focus();
 
 function dontChangeCursorPos(event) {
   console.log('-');

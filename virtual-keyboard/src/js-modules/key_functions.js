@@ -1,10 +1,10 @@
 let funcCapsLock,
 funcShift,
 funcCtrl,
-funcWin,funcAlt,
+funcWin,//~~~
+funcAlt,
 funcUp,
-funcDown,
-funcSpacebar
+funcDown
 
 
 const funcDel = function(textarea, cursor) {
@@ -61,7 +61,6 @@ const keyFunctions = {
   Backspace: funcBackspace,
   Up: funcUp,
   Down: funcDown,
-  Spacebar: funcSpacebar,
   Left: funcLeft,
   Right: funcRight
 };
