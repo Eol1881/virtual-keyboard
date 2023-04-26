@@ -39,4 +39,4 @@ createRows();
 
 console.log('Basic keyboard layout successfully generated');
 
-export {KEYBOARD}
+export { KEYBOARD, TEXTAREA }

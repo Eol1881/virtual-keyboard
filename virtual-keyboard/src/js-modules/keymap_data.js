@@ -1,16 +1,3 @@
-let funcTab,
-funcCapsLock,
-funcShift,
-funcCtrl,
-funcWin,funcAlt,
-funcEnter,
-funcDel,
-funcBackspace,
-funcUp,
-funcDown,
-funcSpacebar,
-funcLeft,
-funcRight
 
 const keymaps = {
   keymapEN: [
@@ -104,7 +91,7 @@ const keymaps = {
     Win: 'Win',
     Alt: 'Alt',
     Enter: 'Enter',
-    Del: 'Del',
+    Delete: 'Del',
     Backspace: 'Backspace',
     Spacebar: ' ',
     Up: '▲',
@@ -139,22 +126,6 @@ const keymaps = {
     'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Enter', 'Del',
     'Backspace', 'Up', 'Down', 'Spacebar', 'Left', 'Right'
   ],
-  functionalKeys: {
-    Tab: funcTab,
-    CapsLock: funcCapsLock,
-    Shift: funcShift,
-    Ctrl: funcCtrl,
-    Win: funcWin,
-    Alt: funcAlt,
-    Enter: funcEnter,
-    Del: funcDel,
-    Backspace: funcBackspace,
-    Up: funcUp,
-    Down: funcDown,
-    Spacebar: funcSpacebar,
-    Left: funcLeft,
-    Right: funcRight
-  }
 }
 
 const keysData = [];
@@ -168,7 +139,7 @@ class keyObject {
     obj.valueRU = keymaps.symbolsRU[key] || keymaps.symbolsEN[key] || keymaps.keymapRU[index];
     obj.upperCaseEN = keymaps.shiftEN[key] || key.toUpperCase();
     obj.upperCaseRU = keymaps.shiftRU[key] || keymaps.shiftEN[key] || keymaps.keymapRU[index].toUpperCase();
-    obj.func = keymaps.functionalKeys[key] || false;
+    //obj.func = keymaps.functionalKeys[key] || false;
 
     return obj;
   }

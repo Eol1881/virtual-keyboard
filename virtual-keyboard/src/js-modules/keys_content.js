@@ -15,6 +15,8 @@ function generateKeys() {
       keyHolder.classList.add('keyboard__key', `keyboard__key--${currentKey}`);
       currentRow.appendChild(keyHolder);
 
+      keyHolder.dataset.value = currentKey;
+
       class keyContent {
         constructor(lang, keyIndex) {
           this.langBox = document.createElement('span');

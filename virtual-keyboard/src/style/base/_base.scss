@@ -9,3 +9,8 @@ body {
 .hidden {
   display: none;
 }
+
+.descr,
+.lang {
+  user-select: none;
+}
