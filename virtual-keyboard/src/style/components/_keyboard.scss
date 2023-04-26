@@ -45,11 +45,27 @@
     transition: border-radius 0.3s, background-color 0.3s;
   }
 
+  &__key:hover {
+    opacity: 0.7;
+    box-shadow: 0px 0px 10px rgba(42, 68, 151, 0.932);
+    color: yellow;
+  }
 
 
 
 
 
 
+}
 
+
+.lowerCase,
+.upperCase,
+.caps,
+.capsShift {
+  display: block;
+}
+
+.hidden {
+  display: none;
 }

@@ -1,4 +1,7 @@
 import './index.html'; // HTML main page import
 import './style.scss'; // CSS STYLES import
 
-import './js-modules/layout'; //
+import './js-modules/basic_layout'; //
+import './js-modules/keymap_data'; //
+import './js-modules/keys_content';
+import './js-modules/event_listeners';
