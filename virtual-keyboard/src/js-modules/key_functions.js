@@ -45,18 +45,26 @@ const funcLeft = function(textarea, cursor) {
 const funcDown = function(textarea, cursor) {
   const currentValue = textarea.value;
 
-  const xPosition = cursor - currentValue.lastIndexOf('\n', cursor);
-  const newCursorPos = currentValue.indexOf('\n', cursor + 1) + xPosition;
-
+  // if we are on last line - set cursor pos to textarea.length
   const isOnLastLine = currentValue.indexOf('\n', cursor) === -1;
-  const isOnPreLastLineLast = newCursorPos === -1;
+  if (isOnLastLine) {
+    //console.log('on last line');
+    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+    return textarea.value.length;
+  }
 
-  // if we are on last line - set cursor pos to end
-  if (isOnLastLine || isOnPreLastLineLast) {
-    console.log('on last');
-    const lastPossiblePos = currentValue.length;
-    textarea.setSelectionRange(lastPossiblePos, lastPossiblePos);
-    return lastPossiblePos;
+  const prevLineBreakPos = currentValue.lastIndexOf('\n', cursor - 1) + 1;
+  const currentLineLengthBeforeCursor = cursor - prevLineBreakPos;
+  const nextLineBreakPos = currentValue.indexOf('\n', cursor) + 1;
+  const afterNextLineBreakPos = currentValue.indexOf('\n', nextLineBreakPos);
+  const nextLineLength = afterNextLineBreakPos - nextLineBreakPos;
+  //console.log(nextLineBreakPos, afterNextLineBreakPos, nextLineLength);
+
+  let newCursorPos;
+  if (currentLineLengthBeforeCursor > nextLineLength && afterNextLineBreakPos !== -1) {
+    newCursorPos = nextLineBreakPos + nextLineLength;
+  } else {
+    newCursorPos = nextLineBreakPos + currentLineLengthBeforeCursor;
   }
 
   textarea.setSelectionRange(newCursorPos, newCursorPos);
@@ -66,19 +74,33 @@ const funcDown = function(textarea, cursor) {
 const funcUp = function(textarea, cursor) {
   const currentValue = textarea.value;
 
-  // if we are on 1st line - set cursor pos to zero
+  // if we are on 1st line - set cursor pos to zero and return
   const isOnFirstLine = currentValue.lastIndexOf('\n', cursor - 1) === -1;
   if (isOnFirstLine) {
-    console.log('on 1st');
+    //console.log('on 1st line');
     textarea.setSelectionRange(0, 0);
     return 0;
   }
 
-  const lastLineBreakPos = currentValue.lastIndexOf('\n', cursor);
-  const beforeLastLineBreakPos = currentValue.lastIndexOf('\n', lastLineBreakPos - 1);
-  const xPosition = cursor - currentValue.lastIndexOf('\n', cursor);
+  let nextLineBreakPos;// if on last line - set equal to textarea.value.length
+  if (currentValue.indexOf('\n', cursor) !== -1) nextLineBreakPos = currentValue.indexOf('\n', cursor);
+  else nextLineBreakPos = currentValue.length;
+  const prevLineBreakPos = currentValue.lastIndexOf('\n', cursor - 1);
+  const beforePrevLineBreakPos = currentValue.lastIndexOf('\n', prevLineBreakPos - 1);
+  const prevLineLength = prevLineBreakPos - beforePrevLineBreakPos - 1;
+  const currentLineLengthBeforeCursor = cursor - prevLineBreakPos - 1;
 
-  const newCursorPos = beforeLastLineBreakPos + xPosition;
+  //console.log('xxxx', prevLineLength, currentLineLengthBeforeCursor);
+  let xPosition;
+  let newCursorPos;
+  if (currentLineLengthBeforeCursor <= prevLineLength) {
+    xPosition = cursor - prevLineBreakPos;
+    newCursorPos = beforePrevLineBreakPos + xPosition;
+  } else {
+    xPosition = prevLineLength + 1;
+    newCursorPos = beforePrevLineBreakPos + xPosition;
+  }
+
   textarea.setSelectionRange(newCursorPos, newCursorPos);
   return newCursorPos;
 }
