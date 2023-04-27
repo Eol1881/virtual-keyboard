@@ -15,7 +15,7 @@ function updateCursorPosition(textarea = TEXTAREA) {
   textarea.selectionEnd = cursorPosition;
 }
 
-KEYBOARD.addEventListener('click', (e) => {
+KEYBOARD.addEventListener('mousedown', (e) => {
   startTime = performance.now(); // start the delay measurement (performance check)
 
   if (e.target.tagName !== 'SPAN') return;
@@ -23,6 +23,7 @@ KEYBOARD.addEventListener('click', (e) => {
   console.log('~~~~~', keyDatasetValue);
 
   if (keyFunctions[keyDatasetValue]) {
+    //console.log(e);
     cursorPosition = keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
     updateCursorPosition();
   } else {
@@ -35,6 +36,17 @@ KEYBOARD.addEventListener('click', (e) => {
   const inputEvent = new Event('input');
   TEXTAREA.dispatchEvent(inputEvent); // trigger the event
   console.log('Cursor position:', cursorPosition);
+})
+
+KEYBOARD.addEventListener('mouseup', (e) => {
+  if (e.target.tagName !== 'SPAN') return;
+  const keyDatasetValue = e.target.parentElement.parentElement.dataset.value;
+  if (keyDatasetValue !== 'Shift') return;
+  //console.log(keyDatasetValue);
+  //console.log(keyFunctions[keyDatasetValue]);
+  //if (keyFunctions[keyDatasetValue] !== 'Shift') return;
+  //if (!keyFunctions.hasOwnProperty(keyDatasetValue)) return;
+  keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
 })
 
 TEXTAREA.addEventListener('input', () => {

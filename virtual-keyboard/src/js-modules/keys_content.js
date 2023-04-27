@@ -1,6 +1,6 @@
 import { keysData } from "./keymap_data";
 import { KEYBOARD } from "./basic_layout";
-const KEYBOARD_ROWS = Array.from(KEYBOARD.children);
+export const KEYBOARD_ROWS = Array.from(KEYBOARD.children);
 const keyboardRowsLengths = [14, 15, 13, 13, 9];
 
 function generateKeys() {
@@ -22,22 +22,28 @@ function generateKeys() {
           this.langBox = document.createElement('span');
           this.langBox.classList.add(lang);
           if (lang === 'RU') this.langBox.classList.add('hidden');
+          // if (keysData[keyIndex]['isLetterRU']) this.langBox.classList.add('letterRU');
+          // if (keysData[keyIndex]['isLetterEN']) this.langBox.classList.add('letterEN');
+          const isLetter = keysData[keyIndex][`isLetter${lang}`];
+          const keyLowerCase = keysData[keyIndex][`value${lang}`];
+          const keyUpperCase = keysData[keyIndex][`upperCase${lang}`];
 
           const lowerCase = document.createElement('span');
           lowerCase.classList.add('lowerCase');
-          lowerCase.textContent = keysData[keyIndex][`value${lang}`];
+          lowerCase.textContent = keyLowerCase;
 
           const upperCase = document.createElement('span');
           upperCase.classList.add('upperCase', 'hidden');
-          upperCase.textContent = keysData[keyIndex][`upperCase${lang}`];
+          upperCase.textContent = keyUpperCase;
 
           const capsShift = document.createElement('span');
           capsShift.classList.add('capsShift', 'hidden');
-          capsShift.textContent = keysData[keyIndex][`value${lang}`];
+          //capsShift.textContent = keyLowerCase;
+          isLetter ? capsShift.textContent = keyLowerCase : capsShift.textContent = keyUpperCase;
 
           const caps = document.createElement('span');
           caps.classList.add('caps', 'hidden');
-          caps.textContent = keysData[keyIndex][`upperCase${lang}`];
+          isLetter ? caps.textContent = keyLowerCase.toUpperCase() : caps.textContent = keyLowerCase;
 
           this.langBox.append(lowerCase, upperCase, caps, capsShift);
 

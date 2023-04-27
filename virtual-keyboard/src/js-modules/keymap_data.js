@@ -122,6 +122,62 @@ const keymaps = {
     Period: "Ю",
     Slash: ",",
   },
+  // capsEN: {
+  //   a: 'A',
+  //   b: 'B',
+  //   c: 'C',
+  //   d: 'D',
+  //   e: 'E',
+  //   f: 'F',
+  //   g: 'G',
+  //   h: 'H',
+  //   i: 'I',
+  //   j: 'J',
+  //   k: 'K',
+  //   l: 'L',
+  //   m: 'M',
+  //   n: 'N',
+  //   o: 'O',
+  //   p: 'P',
+  //   q: 'Q',
+  //   r: 'R',
+  //   s: 'S',
+  //   t: 'T',
+  //   u: 'U',
+  //   v: 'V',
+  //   w: 'W',
+  //   x: 'X',
+  //   y: 'Y',
+  //   z: 'Z'
+  // },
+  // capsRU: {
+  //   a: 'A',
+  //   b: 'B',
+  //   c: 'C',
+  //   d: 'D',
+  //   e: 'E',
+  //   f: 'F',
+  //   g: 'G',
+  //   h: 'H',
+  //   i: 'I',
+  //   j: 'J',
+  //   k: 'K',
+  //   l: 'L',
+  //   m: 'M',
+  //   n: 'N',
+  //   o: 'O',
+  //   p: 'P',
+  //   q: 'Q',
+  //   r: 'R',
+  //   s: 'S',
+  //   t: 'T',
+  //   u: 'U',
+  //   v: 'V',
+  //   w: 'W',
+  //   x: 'X',
+  //   y: 'Y',
+  //   z: 'Z'
+  // },
   noCase: [
     'Tab', 'CapsLock', 'Shift', 'Ctrl', 'Win', 'Alt', 'Enter', 'Del',
     'Backspace', 'Up', 'Down', 'Spacebar', 'Left', 'Right'
@@ -139,7 +195,14 @@ class keyObject {
     obj.valueRU = keymaps.symbolsRU[key] || keymaps.symbolsEN[key] || keymaps.keymapRU[index];
     obj.upperCaseEN = keymaps.shiftEN[key] || key.toUpperCase();
     obj.upperCaseRU = keymaps.shiftRU[key] || keymaps.shiftEN[key] || keymaps.keymapRU[index].toUpperCase();
-    //obj.func = keymaps.functionalKeys[key] || false;
+
+    obj.isLetterEN = key.length === 1;
+    obj.isLetterRU = keymaps.keymapRU[index] === 1;
+
+    // obj.shiftEN = keymaps.shiftEN[index];
+    // obj.shiftEN = keymaps.shiftEN[index];
+    // obj.capsEN = keymaps.shiftEN[key] || key.toUpperCase();
+    // obj.capsRU = keymaps.shiftRU[key] || keymaps.shiftEN[key] || keymaps.keymapRU[index].toUpperCase();
 
     return obj;
   }
