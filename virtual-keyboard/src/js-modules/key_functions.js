@@ -57,8 +57,11 @@ const funcDown = function(textarea, cursor) {
   const currentLineLengthBeforeCursor = cursor - prevLineBreakPos;
   const nextLineBreakPos = currentValue.indexOf('\n', cursor) + 1;
   const afterNextLineBreakPos = currentValue.indexOf('\n', nextLineBreakPos);
-  const nextLineLength = afterNextLineBreakPos - nextLineBreakPos;
-  //console.log(nextLineBreakPos, afterNextLineBreakPos, nextLineLength);
+  const isOnPreLastLine = afterNextLineBreakPos === -1;
+  let nextLineLength;
+  if (isOnPreLastLine) nextLineLength = textarea.value.length - prevLineBreakPos;
+  else nextLineLength = afterNextLineBreakPos - nextLineBreakPos;
+  console.log(nextLineBreakPos, afterNextLineBreakPos, nextLineLength);
 
   let newCursorPos;
   if (currentLineLengthBeforeCursor > nextLineLength && afterNextLineBreakPos !== -1) {
@@ -82,15 +85,12 @@ const funcUp = function(textarea, cursor) {
     return 0;
   }
 
-  let nextLineBreakPos;// if on last line - set equal to textarea.value.length
-  if (currentValue.indexOf('\n', cursor) !== -1) nextLineBreakPos = currentValue.indexOf('\n', cursor);
-  else nextLineBreakPos = currentValue.length;
   const prevLineBreakPos = currentValue.lastIndexOf('\n', cursor - 1);
   const beforePrevLineBreakPos = currentValue.lastIndexOf('\n', prevLineBreakPos - 1);
   const prevLineLength = prevLineBreakPos - beforePrevLineBreakPos - 1;
   const currentLineLengthBeforeCursor = cursor - prevLineBreakPos - 1;
-
   //console.log('xxxx', prevLineLength, currentLineLengthBeforeCursor);
+
   let xPosition;
   let newCursorPos;
   if (currentLineLengthBeforeCursor <= prevLineLength) {
