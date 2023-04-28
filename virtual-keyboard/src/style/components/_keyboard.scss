@@ -1,43 +1,34 @@
 .keyboard {
-  width: 70%;
-  //width: 70%;
-  //height: 200px;
+
+  @include adaptive-value-start-end-ultimate('width', 730, 320, 800, 320);
+
   margin: 0 auto;
   padding: 5px;
   padding-left: 0;
   padding-bottom: 0;
-  background: #888888;
+  background: $keyboard-color;
   border: 3px solid;
-  border-color: $key-color-orange;
+  border-color: $keyboard-border-color;
   border-radius: 5px;
   user-select: none;
-
-
-  // grid-template-columns: repeat(74, calc($key_size/4));
-  // grid-template-rows: repeat(5, calc($key_size));
-  // grid-column-gap: 0px;
-  // grid-row-gap: calc($key_size/4);
 
   &__row {
     width: 100%;
     height: 40px;
     margin-bottom: 8px;
-    background-color: #888866;
+    //background-color: #888866;
 
     display: flex;
     justify-content: center;
   }
-
 
   &__key {
     display: block;
     width: 40px;
     height: 40px;
     line-height: 40px;
-    background-color: red;
+    background-color: $key-color;
     margin-left: 5px;
-
-
 
     text-align: center;
     border-radius: 6px;
@@ -51,12 +42,6 @@
     box-shadow: 0px 0px 10px rgba(42, 68, 151, 0.932);
     color: yellow;
   }
-
-
-
-
-
-
 }
 
 
@@ -74,5 +59,5 @@
 
 
 .highlight {
-  background-color: green;
+  background-color: $key-active-color;
 }

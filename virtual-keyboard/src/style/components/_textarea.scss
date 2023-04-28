@@ -1,10 +1,12 @@
 .textarea {
-    background-color: aqua;
 
-    display: block;
-    width: 70%;
-    height: 200px;
-    margin: 10px auto 10px;
-    padding: 10px;
-    font-size: 1.5em;
+  @include adaptive-value-start-end-ultimate('width', 730, 320, 800, 320);
+
+  display: block;
+  height: 200px;
+  margin: 10px auto 10px;
+  padding: 10px;
+  font-size: 1.5em;
+
+  background-color: $text-area-color;
 }
