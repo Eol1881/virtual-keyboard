@@ -5,7 +5,7 @@ const keymaps = {
     'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash',
     'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
     'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft',
-    'Win', 'AltLeft', 'Spacebar', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'
+    'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'
   ],
   symbolsRU: {
     KeyQ: 'й',
@@ -68,8 +68,8 @@ const keymaps = {
     ControlRight: 'Ctrl',
     AltLeft: 'Alt',
     AltRight: 'Alt',
-    Win: 'Win',
-    Spacebar: ' ',
+    MetaLeft: 'Win',
+    Space: ' ',
     ArrowUp: '▲',
     ArrowLeft: '◄',
     ArrowDown: '▼',
@@ -145,11 +145,11 @@ const keymaps = {
     ControlRight: 'Ctrl',
     AltLeft: 'Alt',
     AltRight: 'Alt',
-    Win: 'Win',
+    Win: 'MetaLeft',
     Enter: 'Enter',
     Delete: 'Del',
     Backspace: 'Backspace',
-    Spacebar: ' ',
+    Space: ' ',
     ArrowUp: '▲',
     ArrowLeft: '◄',
     ArrowDown: '▼',
