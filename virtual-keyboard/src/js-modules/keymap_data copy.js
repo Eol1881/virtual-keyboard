@@ -4,8 +4,8 @@ const keymaps = {
     'Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
     'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash',
     'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
-    'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft',
-    'Win', 'AltLeft', 'Spacebar', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'
+    'Shift', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'Shift', 'Ctrl',
+    'Win', 'Alt', 'Spacebar', 'Alt', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'Ctrl'
   ],
   symbolsRU: {
     KeyQ: 'й',
@@ -62,13 +62,10 @@ const keymaps = {
     Tab: 'Tab',
     CapsLock: 'CapsLock',
     Enter: 'Enter',
-    ShiftLeft: 'Shift',
-    ShiftRight: 'Shift',
-    ControlLeft: 'Ctrl',
-    ControlRight: 'Ctrl',
-    AltLeft: 'Alt',
-    AltRight: 'Alt',
+    Shift: 'Shift',
+    Ctrl: 'Ctrl',
     Win: 'Win',
+    Alt: 'Alt',
     Spacebar: ' ',
     ArrowUp: '▲',
     ArrowLeft: '◄',
@@ -139,13 +136,10 @@ const keymaps = {
 
     Tab: 'Tab',
     CapsLock: 'CapsLock',
-    ShiftLeft: 'Shift',
-    ShiftRight: 'Shift',
-    ControlLeft: 'Ctrl',
-    ControlRight: 'Ctrl',
-    AltLeft: 'Alt',
-    AltRight: 'Alt',
+    Shift: 'Shift',
+    Ctrl: 'Ctrl',
     Win: 'Win',
+    Alt: 'Alt',
     Enter: 'Enter',
     Delete: 'Del',
     Backspace: 'Backspace',
@@ -189,6 +183,7 @@ class keyObject {
   constructor(key) {
     let obj = {};
 
+    obj.key = key;
     obj.valueEN = keymaps.symbolsEN[key];
     obj.valueRU = keymaps.symbolsRU[key] || keymaps.symbolsEN[key];
     obj.upperCaseEN = keymaps.shiftEN[key] || obj.valueEN.toUpperCase();
@@ -201,13 +196,11 @@ class keyObject {
   }
 }
 
-const keysData = {};
+const keysData = [];
 
-keymaps.keyCodes.forEach((keyCode) => {
-  const createdObj = new keyObject(keyCode);
-  keysData[keyCode] = createdObj;
-
-  //keysData.push(createdObj);
+keymaps.keyCodes.forEach((element) => {
+  const createdObj = new keyObject(element);
+  keysData.push(createdObj);
 });
 
 //////////////////////////////////////////////// Performance check

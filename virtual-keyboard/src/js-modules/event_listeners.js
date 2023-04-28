@@ -1,12 +1,11 @@
 import { KEYBOARD, TEXTAREA } from "./basic_layout";
-import { keysData } from "./keymap_data";
 import { keyFunctions } from "./key_functions";
 
-//////////////////////////////////////////////// Performance checks
+////////////////////////////////////// Performance checks //////////////////////////////////////
 let startTime; // delay measurement start time
 let endTime; // delay measurement end time
 let temp;
-////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 
 let cursorPosition = 0; // default cursor position
 
@@ -20,7 +19,6 @@ KEYBOARD.addEventListener('mousedown', (e) => {
 
   if (e.target.tagName !== 'SPAN') return;
   const keyDatasetValue = e.target.parentElement.parentElement.dataset.value;
-  console.log('~~~~~', keyDatasetValue);
 
   if (keyFunctions[keyDatasetValue]) {
     //console.log(e);
@@ -32,20 +30,17 @@ KEYBOARD.addEventListener('mousedown', (e) => {
     updateCursorPosition();
   }
 
+  console.log('>>>>', keyDatasetValue, '(virtual input)' + `\n` + 'Cursor pos:', cursorPosition);
+
   // create a new input event - default one fires only when physical key is down
   const inputEvent = new Event('input');
   TEXTAREA.dispatchEvent(inputEvent); // trigger the event
-  console.log('Cursor position:', cursorPosition);
 })
 
 KEYBOARD.addEventListener('mouseup', (e) => {
   if (e.target.tagName !== 'SPAN') return;
   const keyDatasetValue = e.target.parentElement.parentElement.dataset.value;
-  if (keyDatasetValue !== 'Shift') return;
-  //console.log(keyDatasetValue);
-  //console.log(keyFunctions[keyDatasetValue]);
-  //if (keyFunctions[keyDatasetValue] !== 'Shift') return;
-  //if (!keyFunctions.hasOwnProperty(keyDatasetValue)) return;
+  if (keyDatasetValue !== 'ShiftLeft' || keyDatasetValue !== 'ShiftRight') return;
   keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
 })
 
@@ -57,7 +52,7 @@ TEXTAREA.addEventListener('input', () => {
   temp = startTime;
 });
 
-///////////////////////////////////////////////////////////////////////// Textarea listeners
+////////////////////////////////////// Textarea listeners //////////////////////////////////////
 let isTextareaFirstClick = true;
 let preventBlur = true;
 TEXTAREA.focus();
@@ -89,4 +84,34 @@ TEXTAREA.addEventListener('click', function(event) {
 TEXTAREA.addEventListener('blur', (event) => {
   isTextareaFirstClick = true;
   if (preventBlur) event.target.focus();
+});
+
+////////////////////////////////////// Physical keyboard //////////////////////////////////////
+
+window.addEventListener('keydown', function(e) {
+  startTime = performance.now(); // start the delay measurement (performance check)
+
+  e.preventDefault();
+
+  const keyCode = e.code;
+  const pressedKeyContainer = document.querySelector(`.keyboard__key--${keyCode}`);
+  const langHolder = pressedKeyContainer.querySelector(':not(.hidden)');
+  const symbolHolder = langHolder.querySelector(':not(.hidden)');
+
+  pressedKeyContainer.classList.add('highlight')
+
+  if (keyFunctions[keyCode]) {
+    cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
+    updateCursorPosition();
+  } else {
+    TEXTAREA.value = TEXTAREA.value.slice(0, cursorPosition) + symbolHolder.textContent + TEXTAREA.value.slice(cursorPosition);
+    cursorPosition += 1;
+    updateCursorPosition();
+  }
+
+  console.log('>>>>', keyCode, '(physical input)' + `\n` + 'Cursor pos:', cursorPosition);
+
+  // create a new input event - default one fires only when physical key is down
+  const inputEvent = new Event('input');
+  TEXTAREA.dispatchEvent(inputEvent); // trigger the event
 });

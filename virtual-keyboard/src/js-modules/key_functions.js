@@ -156,17 +156,20 @@ const funcShift = function(textarea, cursor) {
 const keyFunctions = {
   Tab: funcTab,
   CapsLock: funcCapsLock,
-  Shift: funcShift,
-  Ctrl: funcCtrl,
+  ShiftLeft: funcShift,
+  ShiftRight: funcShift,
+  ControlLeft: funcCtrl,
+  ControlRight: funcCtrl,
+  AltLeft: funcAlt,
+  AltRight: funcAlt,
   Win: funcWin,
-  Alt: funcAlt,
   Enter: funcEnter,
   Delete: funcDel,
   Backspace: funcBackspace,
-  Up: funcUp,
-  Down: funcDown,
-  Left: funcLeft,
-  Right: funcRight
+  ArrowUp: funcUp,
+  ArrowDown: funcDown,
+  ArrowLeft: funcLeft,
+  ArrowRight: funcRight
 };
 
 export { keyFunctions };
