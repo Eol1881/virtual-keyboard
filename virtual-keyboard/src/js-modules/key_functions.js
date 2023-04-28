@@ -1,7 +1,3 @@
-let
-funcCtrl,
-funcAlt
-
 const keysUpperCase = document.querySelectorAll('span.upperCase');
 const keysLowerCase = document.querySelectorAll('span.lowerCase');
 const keysCaps = document.querySelectorAll('span.caps');
@@ -109,6 +105,14 @@ const funcWin = function(_, cursor) {
   return cursor;
 }
 
+const funcAlt = function(_, cursor) {
+  return cursor;
+}
+
+const funcCtrl = function(_, cursor) {
+  return cursor;
+}
+
 const funcCapsLock = function(_, cursor) {
   keysLowerCase.forEach(key => {
     key.classList.toggle('hidden');
@@ -129,9 +133,6 @@ const funcCapsLock = function(_, cursor) {
 const funcShift = function(_, cursor) {
   const isCapsActive = document.querySelector('div.keyboard').dataset.value;
 
-
-  // let isCapsActive = !keysCaps[0].classList.contains('hidden');
-
   if (isCapsActive) {
     keysCaps.forEach(key => {
       key.classList.toggle('hidden');
@@ -139,8 +140,7 @@ const funcShift = function(_, cursor) {
     keysCapsShift.forEach(key => {
       key.classList.toggle('hidden');
     })
-  }
-  else {
+  } else {
     keysLowerCase.forEach(key => {
       key.classList.toggle('hidden');
     })
@@ -148,7 +148,6 @@ const funcShift = function(_, cursor) {
       key.classList.toggle('hidden');
     })
   }
-
 
   return cursor;
 }

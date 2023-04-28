@@ -145,7 +145,7 @@ const keymaps = {
     ControlRight: 'Ctrl',
     AltLeft: 'Alt',
     AltRight: 'Alt',
-    Win: 'MetaLeft',
+    MetaLeft: 'Win',
     Enter: 'Enter',
     Delete: 'Del',
     Backspace: 'Backspace',
