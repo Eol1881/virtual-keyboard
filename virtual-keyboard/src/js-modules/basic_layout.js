@@ -21,6 +21,11 @@ const TEXTAREA = createElement(classTags.textarea, ['textarea'], MAIN_WRAPPER);
 const KEYBOARD = createElement(classTags.div, ['keyboard'], MAIN_WRAPPER);
 const DESCRIPTION = createElement(classTags.p, ['descr'], MAIN_WRAPPER);
 const LANGUAGE = createElement(classTags.p, ['lang'], MAIN_WRAPPER);
+const KEYBOARD_STATE = {
+  Shift: false,
+  CapsLock: false,
+  Alt: false
+};
 
 TITLE.innerText = 'RSS Virtual keyboard';
 DESCRIPTION.innerText = 'The keyboard is created in the Windows operating system.';
@@ -39,4 +44,4 @@ createRows();
 
 console.log('Basic keyboard layout successfully generated');
 
-export { KEYBOARD, TEXTAREA }
+export { KEYBOARD, TEXTAREA, KEYBOARD_STATE }

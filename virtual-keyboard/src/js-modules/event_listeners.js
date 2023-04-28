@@ -12,6 +12,9 @@ function dispatchInputEvent() {
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+let isShiftActive = false;
+let isCapsActive = false;
+let capsTrigger = false;
 let cursorPosition = 0; // default cursor position
 function updateCursorPosition(textarea = TEXTAREA) {
   textarea.selectionStart = cursorPosition;
@@ -42,7 +45,7 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   window.addEventListener('mouseup', function removeHightlight() {
     pressedKeyContainer.classList.remove('highlight');
     if (keyDatasetValue.startsWith('Shift')) {
-      keyFunctions['ShiftLeft'](TEXTAREA, cursorPosition);
+      keyFunctions['ShiftLeft'](TEXTAREA, cursorPosition, true);
     }
     window.removeEventListener('mouseup', removeHightlight);
   })
@@ -88,9 +91,29 @@ window.addEventListener('keydown', function(e) {
   const langHolder = pressedKeyContainer.querySelector(':not(.hidden)');
   const symbolHolder = langHolder.querySelector(':not(.hidden)');
 
-  pressedKeyContainer.classList.add('highlight')
+  if (!keyCode.startsWith('Caps')) pressedKeyContainer.classList.add('highlight');
 
-  if (keyFunctions[keyCode]) {
+  if (keyCode.startsWith('Shift')) {
+    if (isShiftActive) return;
+    cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
+    window.addEventListener('keyup', function deactivateShift(e) {
+      if (!e.code.startsWith('Shift')) return;
+      cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
+      window.removeEventListener('keyup', deactivateShift);
+      isShiftActive = false;
+    })
+    isShiftActive = true;
+  } else if (keyCode.startsWith('Caps')) {
+    if (isCapsActive) return;
+    cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
+    pressedKeyContainer.classList.toggle('highlight');
+    window.addEventListener('keyup', function deactivateCaps(e) {
+      if (!e.code.startsWith('Caps')) return;
+      isCapsActive = false;
+      window.removeEventListener('keyup', deactivateCaps);
+    })
+    isCapsActive = true;
+  } else if (keyFunctions[keyCode]) {
     cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
     updateCursorPosition();
   } else {
@@ -106,5 +129,7 @@ window.addEventListener('keydown', function(e) {
 window.addEventListener('keyup', function(e) {
   const keyCode = e.code;
   const pressedKeyContainer = document.querySelector(`.keyboard__key--${keyCode}`);
-  pressedKeyContainer.classList.remove('highlight')
+
+  if (keyCode.startsWith('Caps')) return;
+  else pressedKeyContainer.classList.remove('highlight');
 });

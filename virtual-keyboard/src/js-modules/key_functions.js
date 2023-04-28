@@ -1,3 +1,4 @@
+import { KEYBOARD_STATE } from "./basic_layout";
 const keysUpperCase = document.querySelectorAll('span.upperCase');
 const keysLowerCase = document.querySelectorAll('span.lowerCase');
 const keysCaps = document.querySelectorAll('span.caps');
@@ -114,24 +115,29 @@ const funcCtrl = function(_, cursor) {
 }
 
 const funcCapsLock = function(_, cursor) {
-  keysLowerCase.forEach(key => {
-    key.classList.toggle('hidden');
-  })
-  keysCaps.forEach(key => {
-    key.classList.toggle('hidden');
-  })
+  const isShiftActive = KEYBOARD_STATE.Shift;
 
-  if (document.querySelector('div.keyboard').dataset.value) { // CRUTCH ATTENTION! (for shift func only)
-    delete document.querySelector('div.keyboard').dataset.value;
-  } else {
-    document.querySelector('div.keyboard').dataset.value = 'CAPS-ON';
+  function toggleHidden(elementsArray) {
+    for (let element of elementsArray) {
+      element.forEach(key => {
+        key.classList.toggle('hidden');
+      })
+    }
   }
+
+  if (isShiftActive) {
+    toggleHidden([keysCapsShift, keysUpperCase]);
+  } else {
+    toggleHidden([keysLowerCase, keysCaps]);
+  }
+
+  KEYBOARD_STATE.CapsLock = KEYBOARD_STATE.CapsLock ? false : true;
 
   return cursor;
 }
 
 const funcShift = function(_, cursor) {
-  const isCapsActive = document.querySelector('div.keyboard').dataset.value;
+  const isCapsActive = KEYBOARD_STATE.CapsLock;
 
   if (isCapsActive) {
     keysCaps.forEach(key => {
@@ -148,6 +154,8 @@ const funcShift = function(_, cursor) {
       key.classList.toggle('hidden');
     })
   }
+
+  KEYBOARD_STATE.Shift = KEYBOARD_STATE.Shift ? false : true;
 
   return cursor;
 }

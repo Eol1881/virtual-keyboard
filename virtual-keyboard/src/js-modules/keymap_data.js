@@ -194,8 +194,8 @@ class keyObject {
     obj.upperCaseEN = keymaps.shiftEN[key] || obj.valueEN.toUpperCase();
     obj.upperCaseRU = keymaps.shiftRU[key] || obj.valueRU.toUpperCase();
 
-    obj.isLetterEN = obj.valueEN.length === 1;
-    obj.isLetterRU = obj.valueRU.length === 1;
+    obj.isLetterEN = key.startsWith('K')
+    obj.isLetterRU = 'XXXXXXXX' //obj.valueRU.length === 1;
 
     return obj;
   }
