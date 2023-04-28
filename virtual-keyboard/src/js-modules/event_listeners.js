@@ -5,6 +5,11 @@ import { keyFunctions } from "./key_functions";
 let startTime; // delay measurement start time
 let endTime; // delay measurement end time
 let temp;
+function dispatchInputEvent() {
+  // create a new input event - default one fires only when physical key is down
+  const inputEvent = new Event('input');
+  TEXTAREA.dispatchEvent(inputEvent); // trigger the event
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 let cursorPosition = 0; // default cursor position
@@ -17,7 +22,10 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   startTime = performance.now(); // start the delay measurement (performance check)
 
   if (e.target.tagName !== 'SPAN') return;
-  const keyDatasetValue = e.target.parentElement.parentElement.dataset.value;
+  const pressedKeyContainer = e.target.parentElement.parentElement;
+  const keyDatasetValue = pressedKeyContainer.dataset.value;
+
+  pressedKeyContainer.classList.add('highlight')
 
   if (keyFunctions[keyDatasetValue]) {
     cursorPosition = keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
@@ -29,17 +37,12 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   }
 
   console.log('>>>>', keyDatasetValue, '(virtual input)' + `\n` + 'Cursor pos:', cursorPosition);
+  dispatchInputEvent();
 
-  // create a new input event - default one fires only when physical key is down
-  const inputEvent = new Event('input');
-  TEXTAREA.dispatchEvent(inputEvent); // trigger the event
-})
-
-KEYBOARD.addEventListener('mouseup', (e) => {
-  if (e.target.tagName !== 'SPAN') return;
-  const keyDatasetValue = e.target.parentElement.parentElement.dataset.value;
-  if (keyDatasetValue !== 'ShiftLeft' || keyDatasetValue !== 'ShiftRight') return;
-  keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
+  window.addEventListener('mouseup', function removeHightlight() {
+    pressedKeyContainer.classList.remove('highlight');
+    window.removeEventListener('mouseup', removeHightlight);
+  })
 })
 
 TEXTAREA.addEventListener('input', () => { // performance check related only
@@ -86,10 +89,7 @@ window.addEventListener('keydown', function(e) {
   }
 
   console.log('>>>>', keyCode, '(physical input)' + `\n` + 'Cursor pos:', cursorPosition);
-
-  // create a new input event - default one fires only when physical key is down
-  const inputEvent = new Event('input');
-  TEXTAREA.dispatchEvent(inputEvent); // trigger the event
+  dispatchInputEvent();
 });
 
 window.addEventListener('keyup', function(e) {
