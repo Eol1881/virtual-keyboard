@@ -35,15 +35,16 @@ const keymaps = {
     KeyN: 'т',
     KeyM: 'ь',
 
+    Backslash: '\\',
+    Slash: '.',
+
     Backquote: 'ё',
     BracketLeft: 'х',
     BracketRight: 'ъ',
-    Backslash: '\\',
     Semicolon: 'ж',
     Quote: 'э',
     Comma: 'б',
     Period: 'ю',
-    Slash: '.',
   },
   symbolsEN: {
     Digit1: '1',
@@ -168,15 +169,15 @@ const keymaps = {
     Digit0: ")",
     Minus: "_",
     Equal: "+",
+    Backslash: "/",
+    Slash: ",",
     Backquote: "Ё",
     BracketLeft: "Х",
     BracketRight: "Ъ",
-    Backslash: "/",
     Semicolon: "Ж",
     Quote: "Э",
     Comma: "Б",
     Period: "Ю",
-    Slash: ",",
   },
 }
 
@@ -192,10 +193,10 @@ class keyObject {
     obj.valueEN = keymaps.symbolsEN[key];
     obj.valueRU = keymaps.symbolsRU[key] || keymaps.symbolsEN[key];
     obj.upperCaseEN = keymaps.shiftEN[key] || obj.valueEN.toUpperCase();
-    obj.upperCaseRU = keymaps.shiftRU[key] || obj.valueRU.toUpperCase();
+    obj.upperCaseRU = keymaps.shiftRU[key] || keymaps.shiftEN[key] || obj.valueRU.toUpperCase();
 
-    obj.isLetterEN = key.startsWith('K')
-    obj.isLetterRU = 'XXXXXXXX' //obj.valueRU.length === 1;
+    obj.isLetterEN = key.startsWith('K');
+    obj.isLetterRU = key.startsWith('K') || /^[А-ЯЁ]$/.test(keymaps.shiftRU[key]);
 
     return obj;
   }

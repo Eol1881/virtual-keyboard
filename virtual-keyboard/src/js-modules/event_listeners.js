@@ -1,5 +1,7 @@
-import { KEYBOARD, TEXTAREA } from "./basic_layout";
+import { KEYBOARD, TEXTAREA, KEYBOARD_STATE } from "./basic_layout";
 import { keyFunctions } from "./key_functions";
+import { changeLanguage } from "./key_functions";
+import { keysData } from "./keymap_data";
 
 ////////////////////////////////////// Performance checks //////////////////////////////////////
 let startTime; // delay measurement start time
@@ -14,7 +16,7 @@ function dispatchInputEvent() {
 
 let isShiftActive = false;
 let isCapsActive = false;
-let capsTrigger = false;
+let isLangChangeTriggered = false;
 let cursorPosition = 0; // default cursor position
 function updateCursorPosition(textarea = TEXTAREA) {
   textarea.selectionStart = cursorPosition;
@@ -87,13 +89,25 @@ window.addEventListener('keydown', function(e) {
   e.preventDefault();
 
   const keyCode = e.code;
-  const pressedKeyContainer = document.querySelector(`.keyboard__key--${keyCode}`);
-  const langHolder = pressedKeyContainer.querySelector(':not(.hidden)');
+  const pressedKeyContainer = document.querySelector(`.keyboard__key--${keyCode}`) || undefined;
+  if (pressedKeyContainer === undefined) return; // if non-mapped key pressed
+  const langHolder = pressedKeyContainer.querySelector(`.${KEYBOARD_STATE.language}`);
   const symbolHolder = langHolder.querySelector(':not(.hidden)');
 
   if (!keyCode.startsWith('Caps')) pressedKeyContainer.classList.add('highlight');
 
-  if (keyCode.startsWith('Shift')) {
+  if (e.shiftKey && e.altKey) {
+    if (isLangChangeTriggered) return;
+
+    console.log('--- Shift + Alt combination was pressed');
+    changeLanguage();
+    window.addEventListener('keyup', function deactivateLang(e) {
+      if (!e.code.startsWith('Shift')) return;
+      window.removeEventListener('keyup', deactivateLang);
+      isLangChangeTriggered = false;
+    })
+    isLangChangeTriggered = true;
+  } else if (keyCode.startsWith('Shift')) {
     if (isShiftActive) return;
     cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
     window.addEventListener('keyup', function deactivateShift(e) {
@@ -129,6 +143,8 @@ window.addEventListener('keydown', function(e) {
 window.addEventListener('keyup', function(e) {
   const keyCode = e.code;
   const pressedKeyContainer = document.querySelector(`.keyboard__key--${keyCode}`);
+
+  if (pressedKeyContainer === null) return; // if non-mapped key pressed
 
   if (keyCode.startsWith('Caps')) return;
   else pressedKeyContainer.classList.remove('highlight');

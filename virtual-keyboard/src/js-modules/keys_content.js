@@ -19,7 +19,7 @@ function generateKeys() {
       keyHolder.dataset.value = currentKey;
 
       class keyContent {
-        constructor(lang, keyIndex) {
+        constructor(lang) {
           this.langBox = document.createElement('span');
           this.langBox.classList.add(lang);
           if (lang === 'RU') this.langBox.classList.add('hidden');
@@ -50,56 +50,6 @@ function generateKeys() {
       }
       keyHolder.append(new keyContent('EN', keyIndex), new keyContent('RU', keyIndex));
     }
-
-
-    // let pizda = 0;
-    // for (let keyCode in keysData) {
-    //   if (pizda === currentRowLength) {
-    //     pizda = 0;
-    //     break;
-    //   }
-    //   const keyHolder = document.createElement('div');
-    //   keyHolder.classList.add('keyboard__key', `keyboard__key--${keyCode}`);
-    //   currentRow.appendChild(keyHolder);
-
-    //   keyHolder.dataset.value = keyCode; // ??? not needed ???
-
-    //   class keyContent {
-    //     constructor(lang) {
-    //       this.langBox = document.createElement('span');
-    //       this.langBox.classList.add(lang);
-    //       if (lang === 'RU') this.langBox.classList.add('hidden');
-
-    //       const isLetter = keysData[keyCode][`isLetter${lang}`];
-    //       const keyLowerCase = keysData[keyCode][`value${lang}`];
-    //       const keyUpperCase = keysData[keyCode][`upperCase${lang}`];
-
-    //       const lowerCase = document.createElement('span');
-    //       lowerCase.classList.add('lowerCase');
-    //       lowerCase.textContent = keyLowerCase;
-
-    //       const upperCase = document.createElement('span');
-    //       upperCase.classList.add('upperCase', 'hidden');
-    //       upperCase.textContent = keyUpperCase;
-
-    //       const capsShift = document.createElement('span');
-    //       capsShift.classList.add('capsShift', 'hidden');
-    //       isLetter ? capsShift.textContent = keyLowerCase : capsShift.textContent = keyUpperCase;
-
-    //       const caps = document.createElement('span');
-    //       caps.classList.add('caps', 'hidden');
-    //       isLetter ? caps.textContent = keyLowerCase.toUpperCase() : caps.textContent = keyLowerCase;
-
-    //       this.langBox.append(lowerCase, upperCase, caps, capsShift);
-
-    //       return this.langBox;
-    //     }
-    //   }
-    //   keyHolder.append(new keyContent('EN'), new keyContent('RU'));
-
-    //   pizda++;
-    // }
-
   }
 }
 generateKeys()

@@ -24,7 +24,8 @@ const LANGUAGE = createElement(classTags.p, ['lang'], MAIN_WRAPPER);
 const KEYBOARD_STATE = {
   Shift: false,
   CapsLock: false,
-  Alt: false
+  Alt: false,
+  language: 'EN'
 };
 
 TITLE.innerText = 'RSS Virtual keyboard';

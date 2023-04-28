@@ -3,6 +3,8 @@ const keysUpperCase = document.querySelectorAll('span.upperCase');
 const keysLowerCase = document.querySelectorAll('span.lowerCase');
 const keysCaps = document.querySelectorAll('span.caps');
 const keysCapsShift = document.querySelectorAll('span.capsShift');
+const langBoxesEN = Array.from(document.querySelectorAll('span.EN'));
+const langBoxesRU = Array.from(document.querySelectorAll('span.RU'));
 
 const funcDel = function(textarea, cursor) {
   const text = textarea.value;
@@ -160,6 +162,12 @@ const funcShift = function(_, cursor) {
   return cursor;
 }
 
+const changeLanguage = function() {
+  langBoxesEN.forEach(langBox => (langBox.classList.toggle('hidden')));
+  langBoxesRU.forEach(langBox => (langBox.classList.toggle('hidden')));
+  KEYBOARD_STATE.language = KEYBOARD_STATE.language === 'EN' ? 'RU' : 'EN';
+}
+
 const keyFunctions = {
   Tab: funcTab,
   CapsLock: funcCapsLock,
@@ -179,4 +187,4 @@ const keyFunctions = {
   ArrowRight: funcRight
 };
 
-export { keyFunctions };
+export { keyFunctions, changeLanguage };
