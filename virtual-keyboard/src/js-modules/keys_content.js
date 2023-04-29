@@ -1,16 +1,17 @@
-import { keysData } from "./keymap_data";
-import { KEYBOARD } from "./basic_layout";
-export const KEYBOARD_ROWS = Array.from(KEYBOARD.children);
+import keysData from './keymap_data';
+import { KEYBOARD } from './basic_layout';
+
+const KEYBOARD_ROWS = Array.from(KEYBOARD.children);
 const keyboardRowsLengths = [14, 15, 13, 13, 9];
 
 function generateKeys() {
   const keysArr = Object.keys(keysData);
   let keyIndex = 0;
-  for (let i = 0; i < keyboardRowsLengths.length; i++) {
+  for (let i = 0; i < keyboardRowsLengths.length; i += 1) {
     const currentRowLength = keyboardRowsLengths[i];
     const currentRow = KEYBOARD_ROWS[i];
 
-    for (let i = 0; i < currentRowLength; i++, keyIndex++) {
+    for (let j = 0; j < currentRowLength; j += 1, keyIndex += 1) {
       const currentKey = keysArr[keyIndex];
       const keyHolder = document.createElement('div');
       keyHolder.classList.add('keyboard__key', `keyboard__key--${currentKey}`);
@@ -18,7 +19,7 @@ function generateKeys() {
 
       keyHolder.dataset.value = currentKey;
 
-      class keyContent {
+      class KeyContent {
         constructor(lang) {
           this.langBox = document.createElement('span');
           this.langBox.classList.add(lang);
@@ -37,19 +38,17 @@ function generateKeys() {
 
           const capsShift = document.createElement('span');
           capsShift.classList.add('capsShift', 'hidden');
-          isLetter ? capsShift.textContent = keyLowerCase : capsShift.textContent = keyUpperCase;
+          capsShift.textContent = isLetter ? keyLowerCase : keyUpperCase;
 
           const caps = document.createElement('span');
           caps.classList.add('caps', 'hidden');
-          isLetter ? caps.textContent = keyLowerCase.toUpperCase() : caps.textContent = keyLowerCase;
+          caps.textContent = isLetter ? keyLowerCase.toUpperCase() : keyLowerCase;
 
           this.langBox.append(lowerCase, upperCase, caps, capsShift);
-
-          return this.langBox;
         }
       }
-      keyHolder.append(new keyContent('EN', keyIndex), new keyContent('RU', keyIndex));
+      keyHolder.append(new KeyContent('EN', keyIndex).langBox, new KeyContent('RU', keyIndex).langBox);
     }
   }
 }
-generateKeys()
+generateKeys();

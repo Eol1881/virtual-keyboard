@@ -1,8 +1,7 @@
-import { KEYBOARD, TEXTAREA, KEYBOARD_STATE } from "./basic_layout";
-import { keyFunctions } from "./key_functions";
-import { changeLanguage } from "./key_functions";
+import { KEYBOARD, TEXTAREA, KEYBOARD_STATE } from './basic_layout';
+import { keyFunctions, changeLanguage } from './key_functions';
 
-////////////////////////////////////// Performance checks //////////////////////////////////////
+/// /////////////////////////////////// Performance checks //////////////////////////////////////
 let startTime; // delay measurement start time
 let endTime; // delay measurement end time
 let temp;
@@ -11,13 +10,14 @@ function dispatchInputEvent() {
   const inputEvent = new Event('input');
   TEXTAREA.dispatchEvent(inputEvent); // trigger the event
 }
-////////////////////////////////////////////////////////////////////////////////////////////////
+/// /////////////////////////////////////////////////////////////////////////////////////////////
 
 let isShiftActive = false;
 let isCapsActive = false;
 let isLangChangeTriggered = false;
 let cursorPosition = 0; // default cursor position
-function updateCursorPosition(textarea = TEXTAREA) {
+function updateCursorPosition(textareaInput = TEXTAREA) {
+  const textarea = textareaInput;
   textarea.selectionStart = cursorPosition;
   textarea.selectionEnd = cursorPosition;
 }
@@ -29,24 +29,25 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   const pressedKeyContainer = e.target.parentElement.parentElement;
   const keyDatasetValue = pressedKeyContainer.dataset.value;
 
-  pressedKeyContainer.classList.add('highlight')
+  pressedKeyContainer.classList.add('highlight');
 
   if (keyDatasetValue.startsWith('Caps')) {
     if (isCapsActive) pressedKeyContainer.classList.remove('highlight');
     else pressedKeyContainer.classList.add('highlight');
     cursorPosition = keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
     isCapsActive = !isCapsActive;
-  } else
-  if (keyFunctions[keyDatasetValue]) {
+  } else if (keyFunctions[keyDatasetValue]) {
     cursorPosition = keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
     updateCursorPosition();
   } else {
-    TEXTAREA.value = TEXTAREA.value.slice(0, cursorPosition) + e.target.textContent + TEXTAREA.value.slice(cursorPosition);
+    TEXTAREA.value = TEXTAREA.value.slice(0, cursorPosition)
+      + e.target.textContent
+      + TEXTAREA.value.slice(cursorPosition);
     cursorPosition += 1;
     updateCursorPosition();
   }
 
-  console.log('>>>>', keyDatasetValue, '(virtual input)' + `\n` + 'Cursor pos:', cursorPosition);
+  console.log(`>>>> ${keyDatasetValue} (virtual input) ${'\n'} Cursor pos: ${cursorPosition}`);
   dispatchInputEvent();
 
   window.addEventListener('mouseup', function removeHightlight() {
@@ -54,11 +55,11 @@ KEYBOARD.addEventListener('mousedown', (e) => {
 
     pressedKeyContainer.classList.remove('highlight');
     if (keyDatasetValue.startsWith('Shift')) {
-      keyFunctions['ShiftLeft'](TEXTAREA, cursorPosition, true);
+      keyFunctions.ShiftLeft(TEXTAREA, cursorPosition, true);
     }
     window.removeEventListener('mouseup', removeHightlight);
-  })
-  //////////////////////////////////////////////////// OR OPTION #2
+  });
+  /// ///////////////////////////////////////////////// OR OPTION #2
   // pressedKeyContainer.addEventListener('mouseleave', function removeHightlight() {
   //   pressedKeyContainer.classList.remove('highlight');
   //   if (keyDatasetValue.startsWith('Shift')) {
@@ -66,7 +67,7 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   //   }
   //   pressedKeyContainer.removeEventListener('mouseleave', removeHightlight);
   // })
-})
+});
 
 TEXTAREA.addEventListener('input', () => { // performance check related only
   if (startTime === temp) return;
@@ -76,10 +77,10 @@ TEXTAREA.addEventListener('input', () => { // performance check related only
   temp = startTime;
 });
 
-////////////////////////////////////// Textarea listeners //////////////////////////////////////
+/// /////////////////////////////////// Textarea listeners //////////////////////////////////////
 TEXTAREA.focus();
 
-TEXTAREA.addEventListener('click', function(event) { // TODO: add multiple character selection support
+TEXTAREA.addEventListener('click', (event) => { // TODO: add multiple character selection support
   cursorPosition = event.target.selectionStart;
   console.log('Cursor position:', cursorPosition);
 });
@@ -88,9 +89,9 @@ TEXTAREA.addEventListener('blur', (event) => {
   event.target.focus();
 });
 
-////////////////////////////////////// Physical keyboard //////////////////////////////////////
+/// /////////////////////////////////// Physical keyboard //////////////////////////////////////
 
-window.addEventListener('keydown', function(e) {
+window.addEventListener('keydown', (e) => {
   startTime = performance.now(); // start the delay measurement (performance check)
 
   e.preventDefault();
@@ -108,51 +109,53 @@ window.addEventListener('keydown', function(e) {
 
     console.log('--- Shift + Alt combination was pressed');
     changeLanguage();
-    window.addEventListener('keyup', function deactivateLang(e) {
-      if (!e.code.startsWith('Shift')) return;
+    window.addEventListener('keyup', function deactivateLang(keyUpEvent) {
+      if (!keyUpEvent.code.startsWith('Shift')) return;
       window.removeEventListener('keyup', deactivateLang);
       isLangChangeTriggered = false;
-    })
+    });
     isLangChangeTriggered = true;
   } else if (keyCode.startsWith('Shift')) {
     if (isShiftActive) return;
     cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
-    window.addEventListener('keyup', function deactivateShift(e) {
-      if (!e.code.startsWith('Shift')) return;
+    window.addEventListener('keyup', function deactivateShift(keyUpEvent) {
+      if (!keyUpEvent.code.startsWith('Shift')) return;
       cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
       window.removeEventListener('keyup', deactivateShift);
       isShiftActive = false;
-    })
+    });
     isShiftActive = true;
   } else if (keyCode.startsWith('Caps')) {
     if (isCapsActive) return;
     cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
     pressedKeyContainer.classList.toggle('highlight');
-    window.addEventListener('keyup', function deactivateCaps(e) {
-      if (!e.code.startsWith('Caps')) return;
+    window.addEventListener('keyup', function deactivateCaps(keyUpEvent) {
+      if (!keyUpEvent.code.startsWith('Caps')) return;
       isCapsActive = false;
       window.removeEventListener('keyup', deactivateCaps);
-    })
+    });
     isCapsActive = true;
   } else if (keyFunctions[keyCode]) {
     cursorPosition = keyFunctions[keyCode](TEXTAREA, cursorPosition);
     updateCursorPosition();
   } else {
-    TEXTAREA.value = TEXTAREA.value.slice(0, cursorPosition) + symbolHolder.textContent + TEXTAREA.value.slice(cursorPosition);
+    TEXTAREA.value = TEXTAREA.value.slice(0, cursorPosition)
+      + symbolHolder.textContent
+      + TEXTAREA.value.slice(cursorPosition);
     cursorPosition += 1;
     updateCursorPosition();
   }
 
-  console.log('>>>>', keyCode, '(physical input)' + `\n` + 'Cursor pos:', cursorPosition);
+  console.log(`>>>> ${keyCode} (physical input) ${'\n'} Cursor pos: ${cursorPosition}`);
   dispatchInputEvent();
 });
 
-window.addEventListener('keyup', function(e) {
+window.addEventListener('keyup', (e) => {
   const keyCode = e.code;
   const pressedKeyContainer = document.querySelector(`.keyboard__key--${keyCode}`);
 
   if (pressedKeyContainer === null) return; // if non-mapped key pressed
 
   if (keyCode.startsWith('Caps')) return;
-  else pressedKeyContainer.classList.remove('highlight');
+  pressedKeyContainer.classList.remove('highlight');
 });

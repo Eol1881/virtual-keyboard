@@ -1,11 +1,10 @@
-
 const keymaps = {
   keyCodes: [
     'Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
     'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash',
     'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter',
     'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft',
-    'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'
+    'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight',
   ],
   symbolsRU: {
     KeyQ: 'й',
@@ -116,27 +115,27 @@ const keymaps = {
   },
 
   shiftEN: {
-    Digit1: "!",
-    Digit2: "@",
-    Digit3: "#",
-    Digit4: "$",
-    Digit5: "%",
-    Digit6: "^",
-    Digit7: "&",
-    Digit8: "*",
-    Digit9: "(",
-    Digit0: ")",
-    Minus: "_",
-    Equal: "+",
-    Backquote: "~",
-    BracketLeft: "{",
-    BracketRight: "}",
-    Backslash: "|",
-    Semicolon: ":",
-    Quote: "\'",
-    Comma: "<",
-    Period: ">",
-    Slash: "?",
+    Digit1: '!',
+    Digit2: '@',
+    Digit3: '#',
+    Digit4: '$',
+    Digit5: '%',
+    Digit6: '^',
+    Digit7: '&',
+    Digit8: '*',
+    Digit9: '(',
+    Digit0: ')',
+    Minus: '_',
+    Equal: '+',
+    Backquote: '~',
+    BracketLeft: '{',
+    BracketRight: '}',
+    Backslash: '|',
+    Semicolon: ':',
+    Quote: "'",
+    Comma: '<',
+    Period: '>',
+    Slash: '?',
 
     Tab: 'Tab',
     CapsLock: 'CapsLock',
@@ -157,64 +156,60 @@ const keymaps = {
     ArrowRight: '►',
   },
   shiftRU: {
-    Digit1: "!",
-    Digit2: "\"",
-    Digit3: "№",
-    Digit4: ";",
-    Digit5: "%",
-    Digit6: ":",
-    Digit7: "?",
-    Digit8: "*",
-    Digit9: "(",
-    Digit0: ")",
-    Minus: "_",
-    Equal: "+",
-    Backslash: "/",
-    Slash: ",",
-    Backquote: "Ё",
-    BracketLeft: "Х",
-    BracketRight: "Ъ",
-    Semicolon: "Ж",
-    Quote: "Э",
-    Comma: "Б",
-    Period: "Ю",
+    Digit1: '!',
+    Digit2: '"',
+    Digit3: '№',
+    Digit4: ';',
+    Digit5: '%',
+    Digit6: ':',
+    Digit7: '?',
+    Digit8: '*',
+    Digit9: '(',
+    Digit0: ')',
+    Minus: '_',
+    Equal: '+',
+    Backslash: '/',
+    Slash: ',',
+    Backquote: 'Ё',
+    BracketLeft: 'Х',
+    BracketRight: 'Ъ',
+    Semicolon: 'Ж',
+    Quote: 'Э',
+    Comma: 'Б',
+    Period: 'Ю',
   },
-}
+};
 
-//////////////////////////////////////////////// Performance check
+/// ///////////////////////////////////////////// Performance check
 const startTime = performance.now(); // delay measurement start time
-let endTime; // delay measurement end time
-////////////////////////////////////////////////
+/// /////////////////////////////////////////////
 
-class keyObject {
+class KeyObject {
   constructor(key) {
-    let obj = {};
+    this.obj = {};
 
-    obj.valueEN = keymaps.symbolsEN[key];
-    obj.valueRU = keymaps.symbolsRU[key] || keymaps.symbolsEN[key];
-    obj.upperCaseEN = keymaps.shiftEN[key] || obj.valueEN.toUpperCase();
-    obj.upperCaseRU = keymaps.shiftRU[key] || keymaps.shiftEN[key] || obj.valueRU.toUpperCase();
-
-    obj.isLetterEN = key.startsWith('K');
-    obj.isLetterRU = key.startsWith('K') || /^[А-ЯЁ]$/.test(keymaps.shiftRU[key]);
-
-    return obj;
+    this.obj.valueEN = keymaps.symbolsEN[key];
+    this.obj.valueRU = keymaps.symbolsRU[key] || keymaps.symbolsEN[key];
+    this.obj.upperCaseEN = keymaps.shiftEN[key] || this.obj.valueEN.toUpperCase();
+    this.obj.upperCaseRU = keymaps.shiftRU[key]
+      || keymaps.shiftEN[key]
+      || this.obj.valueRU.toUpperCase();
+    this.obj.isLetterEN = key.startsWith('K');
+    this.obj.isLetterRU = key.startsWith('K') || /^[А-ЯЁ]$/.test(keymaps.shiftRU[key]);
   }
 }
 
 const keysData = {};
 
 keymaps.keyCodes.forEach((keyCode) => {
-  const createdObj = new keyObject(keyCode);
+  const createdObj = new KeyObject(keyCode).obj;
   keysData[keyCode] = createdObj;
-
-  //keysData.push(createdObj);
 });
 
-//////////////////////////////////////////////// Performance check
-endTime = performance.now();
+/// ///////////////////////////////////////////// Performance check
+const endTime = performance.now(); // delay measurement end time
 const delay = endTime - startTime;
 console.log(`Keys data successfully generated (${delay.toFixed(1)} ms):`, keysData);
-////////////////////////////////////////////////
+/// /////////////////////////////////////////////
 
-export { keysData };
+export default keysData;
