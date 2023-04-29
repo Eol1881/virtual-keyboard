@@ -36,7 +36,7 @@
     //border: 1px solid #ccc;
     background-color: #b63333;
     opacity: 0.9;
-    transition: background-color 500ms ease;
+    transition: background-color 1000ms ease;
   }
 
   &__radio:checked + &__span {
@@ -45,8 +45,7 @@
   }
 
   &__span:hover {
-    background-color: #11cf21;
-
+    background-color: #007bff83;
   }
 
 }
