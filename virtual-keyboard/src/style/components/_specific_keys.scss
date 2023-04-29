@@ -25,20 +25,3 @@
 .keyboard__key--MetaLeft {
   width: 45px;
 }
-
-
-////////////////////////////////// Radio buttons block
-
-.radio-wrapper {
-
-  margin: 0 auto;
-  display: flex;
-  max-width: 100px;
-  gap: 15px;
-
-  &__radio {
-    width: 20px;
-    height: 20px;
-  }
-
-}

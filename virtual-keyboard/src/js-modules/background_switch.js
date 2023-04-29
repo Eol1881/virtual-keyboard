@@ -5,13 +5,18 @@ radioWrapper.classList.add('radio-wrapper');
 
 class radioInput {
   constructor(name, value, checked) {
+    this.label = document.createElement('label');
+    this.label.classList.add('radio-wrapper__label');
+    this.span = document.createElement('span');
+    this.span.classList.add('radio-wrapper__span');
     this.input = document.createElement('input');
     this.input.classList.add('radio-wrapper__radio');
     this.input.type = 'radio';
     this.input.name = name;
     this.input.value = value;
     this.input.checked = checked;
-		return this.input;
+    this.label.append(this.input, this.span);
+		return this.label;
   }
 }
 
@@ -44,39 +49,3 @@ radioWrapper.addEventListener('change', (event) => {
 		KEYBOARD.classList.add('keyboard-background-3');
   }
 });
-
-
-// radio1.classList.add('radio-wrapper__radio', 'radio-wrapper__radio--1');
-// radio1.type = "radio";
-// radio1.name = "option";
-// radio1.value = "option1";
-// radio1.checked = true;
-
-// const radio2 = document.createElement("input");
-// radio2.classList.add('radio-wrapper__radio', 'radio-wrapper__radio--2');
-// radio2.type = "radio";
-// radio2.name = "option";
-// radio2.value = "option2";
-
-// const radio3 = document.createElement("input");
-// radio3.classList.add('radio-wrapper__radio', 'radio-wrapper__radio--3');
-// radio3.type = "radio";
-// radio3.name = "option";
-// radio3.value = "option3";
-
-// radioWrapper.append(radio1, radio2, radio3);
-// KEYBOARD.insertAdjacentElement('afterend', radioWrapper);
-
-// radioWrapper.addEventListener('change', (event) => {
-//   const clickedValue = event.target.value;
-//   if (clickedValue === 'option1') {
-//     KEYBOARD.classList.remove('keyboard-background-1');
-// 		KEYBOARD.classList.remove('keyboard-background-2');
-//   } else if (clickedValue === 'option2') {
-//     KEYBOARD.classList.add('keyboard-background-1');
-// 		KEYBOARD.classList.remove('keyboard-background-2');
-//   } else if (clickedValue === 'option3') {
-//     KEYBOARD.classList.add('keyboard-background-2');
-// 		KEYBOARD.classList.remove('keyboard-background-1');
-//   }
-// });

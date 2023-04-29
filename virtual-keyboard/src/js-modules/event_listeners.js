@@ -32,6 +32,12 @@ KEYBOARD.addEventListener('mousedown', (e) => {
 
   pressedKeyContainer.classList.add('highlight')
 
+  if (keyDatasetValue.startsWith('Caps')) {
+    if (isCapsActive) pressedKeyContainer.classList.remove('highlight');
+    else pressedKeyContainer.classList.add('highlight');
+    cursorPosition = keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
+    isCapsActive = !isCapsActive;
+  } else
   if (keyFunctions[keyDatasetValue]) {
     cursorPosition = keyFunctions[keyDatasetValue](TEXTAREA, cursorPosition);
     updateCursorPosition();
@@ -45,6 +51,8 @@ KEYBOARD.addEventListener('mousedown', (e) => {
   dispatchInputEvent();
 
   window.addEventListener('mouseup', function removeHightlight() {
+    if (keyDatasetValue.startsWith('Caps')) return;
+
     pressedKeyContainer.classList.remove('highlight');
     if (keyDatasetValue.startsWith('Shift')) {
       keyFunctions['ShiftLeft'](TEXTAREA, cursorPosition, true);
