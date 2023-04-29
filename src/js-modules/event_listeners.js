@@ -59,14 +59,6 @@ KEYBOARD.addEventListener('mousedown', (e) => {
     }
     window.removeEventListener('mouseup', removeHightlight);
   });
-  /// ///////////////////////////////////////////////// OR OPTION #2
-  // pressedKeyContainer.addEventListener('mouseleave', function removeHightlight() {
-  //   pressedKeyContainer.classList.remove('highlight');
-  //   if (keyDatasetValue.startsWith('Shift')) {
-  //     keyFunctions['ShiftLeft'](TEXTAREA, cursorPosition);
-  //   }
-  //   pressedKeyContainer.removeEventListener('mouseleave', removeHightlight);
-  // })
 });
 
 TEXTAREA.addEventListener('input', () => { // performance check related only

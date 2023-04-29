@@ -53,7 +53,6 @@ function funcDown(textarea, cursor) {
   // if we are on last line - set cursor pos to textarea.length
   const isOnLastLine = currentValue.indexOf('\n', cursor) === -1;
   if (isOnLastLine) {
-    // console.log('on last line');
     textarea.setSelectionRange(textarea.value.length, textarea.value.length);
     return textarea.value.length;
   }
@@ -85,7 +84,6 @@ function funcUp(textarea, cursor) {
   // if we are on 1st line - set cursor pos to zero and return
   const isOnFirstLine = currentValue.lastIndexOf('\n', cursor - 1) === -1;
   if (isOnFirstLine) {
-    // console.log('on 1st line');
     textarea.setSelectionRange(0, 0);
     return 0;
   }
@@ -94,7 +92,6 @@ function funcUp(textarea, cursor) {
   const beforePrevLineBreakPos = currentValue.lastIndexOf('\n', prevLineBreakPos - 1);
   const prevLineLength = prevLineBreakPos - beforePrevLineBreakPos - 1;
   const currentLineLengthBeforeCursor = cursor - prevLineBreakPos - 1;
-  // console.log('xxxx', prevLineLength, currentLineLengthBeforeCursor);
 
   let xPosition;
   let newCursorPos;
