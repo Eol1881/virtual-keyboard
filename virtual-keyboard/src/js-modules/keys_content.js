@@ -22,7 +22,7 @@ function generateKeys() {
         constructor(lang) {
           this.langBox = document.createElement('span');
           this.langBox.classList.add(lang);
-          if (lang === 'RU') this.langBox.classList.add('hidden');
+          if (localStorage.getItem('language') !== lang) this.langBox.classList.add('hidden');
           const isLetter = keysData[currentKey][`isLetter${lang}`];
           const keyLowerCase = keysData[currentKey][`value${lang}`];
           const keyUpperCase = keysData[currentKey][`upperCase${lang}`];

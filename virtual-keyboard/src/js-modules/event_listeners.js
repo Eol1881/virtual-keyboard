@@ -1,7 +1,6 @@
 import { KEYBOARD, TEXTAREA, KEYBOARD_STATE } from "./basic_layout";
 import { keyFunctions } from "./key_functions";
 import { changeLanguage } from "./key_functions";
-import { keysData } from "./keymap_data";
 
 ////////////////////////////////////// Performance checks //////////////////////////////////////
 let startTime; // delay measurement start time

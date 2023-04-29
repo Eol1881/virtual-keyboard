@@ -1,10 +1,12 @@
-import { KEYBOARD_STATE } from "./basic_layout";
-const keysUpperCase = document.querySelectorAll('span.upperCase');
-const keysLowerCase = document.querySelectorAll('span.lowerCase');
-const keysCaps = document.querySelectorAll('span.caps');
-const keysCapsShift = document.querySelectorAll('span.capsShift');
-const langBoxesEN = Array.from(document.querySelectorAll('span.EN'));
-const langBoxesRU = Array.from(document.querySelectorAll('span.RU'));
+import { KEYBOARD, KEYBOARD_STATE } from "./basic_layout";
+
+const keysUpperCase = KEYBOARD.querySelectorAll('span.upperCase');
+const keysLowerCase = KEYBOARD.querySelectorAll('span.lowerCase');
+const keysCaps = KEYBOARD.querySelectorAll('span.caps');
+const keysCapsShift = KEYBOARD.querySelectorAll('span.capsShift');
+
+const langBoxesEN = Array.from(KEYBOARD.querySelectorAll('span.EN'));
+const langBoxesRU = Array.from(KEYBOARD.querySelectorAll('span.RU'));
 
 const funcDel = function(textarea, cursor) {
   const text = textarea.value;
