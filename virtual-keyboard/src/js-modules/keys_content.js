@@ -6,6 +6,11 @@ const keyboardRowsLengths = [14, 15, 13, 13, 9];
 
 function generateKeys() {
   const keysArr = Object.keys(keysData);
+  let currentLanguage = localStorage.getItem('language');
+  if (!currentLanguage) {
+    localStorage.setItem('language', 'EN');
+    currentLanguage = 'EN';
+  }
   let keyIndex = 0;
   for (let i = 0; i < keyboardRowsLengths.length; i += 1) {
     const currentRowLength = keyboardRowsLengths[i];
@@ -23,7 +28,9 @@ function generateKeys() {
         constructor(lang) {
           this.langBox = document.createElement('span');
           this.langBox.classList.add(lang);
-          if (localStorage.getItem('language') !== lang) this.langBox.classList.add('hidden');
+
+          if (currentLanguage !== lang) this.langBox.classList.add('hidden');
+
           const isLetter = keysData[currentKey][`isLetter${lang}`];
           const keyLowerCase = keysData[currentKey][`value${lang}`];
           const keyUpperCase = keysData[currentKey][`upperCase${lang}`];
@@ -47,7 +54,7 @@ function generateKeys() {
           this.langBox.append(lowerCase, upperCase, caps, capsShift);
         }
       }
-      keyHolder.append(new KeyContent('EN', keyIndex).langBox, new KeyContent('RU', keyIndex).langBox);
+      keyHolder.append(new KeyContent('EN').langBox, new KeyContent('RU').langBox);
     }
   }
 }
