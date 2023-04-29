@@ -7,7 +7,7 @@ const keyboardRowsLengths = [14, 15, 13, 13, 9];
 function generateKeys() {
   const keysArr = Object.keys(keysData);
   let currentLanguage = localStorage.getItem('language');
-  if (!currentLanguage) {
+  if (!currentLanguage || currentLanguage === 'null') {
     localStorage.setItem('language', 'EN');
     currentLanguage = 'EN';
   }
