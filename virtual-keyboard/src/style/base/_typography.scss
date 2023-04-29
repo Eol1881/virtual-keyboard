@@ -1,23 +1,24 @@
 body {
-    font-family: Inter, sans-serif;
-    color: $case-color-gray;
+  font-family: Inter, sans-serif;
+  color: $body-text-color;
 
-    text-align: center;
+  text-align: center;
 }
 
 .title {
-    font-family: Montserrat, sans-serif;
-    font-size: 2em;
-    color: $header-color-green;
-    //font-weight: 400;
-    //line-height: 45px;
-    // letter-spacing: 0.06em;
+  font-family: Montserrat, sans-serif;
+  font-size: 2em;
+  color: $header-text-color;
+  //font-weight: 400;
+  //line-height: 45px;
+  // letter-spacing: 0.06em;
 }
 
-// .paragraph {
-//     font-family: Arial, sans-serif;
-//     font-size: 2em;
-//     // font-weight: 400;
-//     // line-height: 24px;
-//     // letter-spacing: 0px;
-// }
+.textarea {
+  font-family: UbuntuMono-Regular, sans-serif;
+}
+
+.descr,
+.lang {
+  color: rgba(250, 235, 215, 0.493);
+}

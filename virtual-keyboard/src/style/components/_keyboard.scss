@@ -2,15 +2,22 @@
 
   @include adaptive-value-start-end-ultimate('width', 730, 320, 800, 320);
 
-  margin: 0 auto;
+  margin: 0 auto 50px;
   padding: 5px;
   padding-left: 0;
   padding-bottom: 0;
-  background: $keyboard-color;
   border: 3px solid;
   border-color: $keyboard-border-color;
-  border-radius: 5px;
+  border-radius: 8px;
   user-select: none;
+
+  background: $keyboard-color;
+  background-image: url(pic1.jpg);
+  background-repeat: repeat-x;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.8;
+  transition: background-image 900ms ease;
 
   &__row {
     width: 100%;
@@ -38,12 +45,11 @@
   }
 
   &__key:hover {
-    opacity: 0.7;
-    box-shadow: 0px 0px 10px rgba(42, 68, 151, 0.932);
-    color: yellow;
+    //opacity: 0.7;
+    //box-shadow: 0px 0px 10px rgba(42, 68, 151, 0.932);
+    color: $key-text-hover-color;
   }
 }
-
 
 .lowerCase,
 .upperCase,
@@ -56,8 +62,21 @@
   display: none;
 }
 
-
-
 .highlight {
   background-color: $key-active-color;
+  border-radius: 20px;
+  color: $key-text-hover-color;
+}
+
+.keyboard-background-1 {
+  background-image: url(pic2.jpg);
+  background-size: cover;
+}
+.keyboard-background-2 {
+  background-image: url(pic3.jpg);
+  background-size: cover;
+}
+.keyboard-background-3 {
+  background-image: url(pic4.jpg);
+  background-size: cover;
 }
