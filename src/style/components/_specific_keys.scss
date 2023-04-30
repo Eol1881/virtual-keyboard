@@ -1,0 +1,27 @@
+.keyboard__key--Space {
+  width: 320px;
+  white-space: pre-wrap;
+}
+
+.keyboard__key--Tab,
+.keyboard__key--Delete {
+  width: 50px;
+}
+
+.keyboard__key--CapsLock {
+  width: 85px;
+}
+
+.keyboard__key--ShiftLeft,
+.keyboard__key--ShiftRight {
+  width: 95px;
+}
+
+.keyboard__key--Enter,
+.keyboard__key--Backspace {
+  width: 105px;
+}
+
+.keyboard__key--MetaLeft {
+  width: 45px;
+}

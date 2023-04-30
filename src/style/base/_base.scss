@@ -1,0 +1,16 @@
+body {
+  background-color: $background-color;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none;
+}
+
+.descr,
+.lang {
+  user-select: none;
+}

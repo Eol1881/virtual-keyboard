@@ -1,0 +1,21 @@
+$maxWidth: 1920;
+$containerDesktop: 1920; // Desktop container
+$containerTablet: 768; // Tablet container
+$containerMobile: 320; // Mobile container
+
+@mixin adaptive-value-start-end-ultimate($property, $maxSize, $minSize, $whenToStart:$containerDesktop, $whenToEnd:$containerTablet) { // Adaptive dynamic value
+
+  $addSize: $maxSize - $minSize;
+  $widthDelta: $whenToStart - $whenToEnd;
+
+  #{$property}: #{$maxSize + px};
+
+  @media (max-width: #{$whenToStart + px}) and (min-width: #{$whenToEnd + px}) {
+    #{$property}: calc( #{$minSize + px} + #{$addSize} * ((100vw - #{$whenToEnd + px}) / #{$widthDelta}) );
+  }
+
+  @media (max-width: #{$whenToEnd + px}) {
+    #{$property}: #{$minSize + px};
+  }
+
+}

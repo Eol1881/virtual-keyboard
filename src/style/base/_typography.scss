@@ -1,0 +1,24 @@
+body {
+  font-family: Inter, sans-serif;
+  color: $body-text-color;
+
+  text-align: center;
+}
+
+.title {
+  font-family: Montserrat, sans-serif;
+  font-size: 2em;
+  color: $header-text-color;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  user-select: none;
+}
+
+.textarea {
+  font-family: UbuntuMono-Regular, sans-serif;
+}
+
+.descr,
+.lang {
+  color: rgba(250, 235, 215, 0.493);
+}

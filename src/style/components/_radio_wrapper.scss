@@ -1,0 +1,50 @@
+.radio-wrapper {
+
+  margin: 0 auto 20px;
+  display: flex;
+  max-width: fit-content;
+  gap: 15px;
+
+  &__radio {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  &__label {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  &__span {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background-color: #b63333;
+    opacity: 0.9;
+    transition: background-color 1000ms ease;
+  }
+
+  &__radio:checked + &__span {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  &__span:hover {
+    background-color: #007bff83;
+  }
+
+}
